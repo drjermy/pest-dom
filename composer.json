@@ -1,9 +1,9 @@
 {
-    "name": "drjermy/pest-dom-selectors",
+    "name": "drjermy/pest-dom",
     "description": "A set of custom expectations for matching DOM selectors",
     "keywords": [
     ],
-    "homepage": "https://github.com/drjermy/pest-dom-selectors",
+    "homepage": "https://github.com/drjermy/pest-dom",
     "license": "MIT",
     "authors": [
         {
