@@ -1,6 +1,27 @@
 <?php
 
-expect()->extend('toHaveSelector', function (string $selector) {
+use Illuminate\Support\Str;
+
+expect()->extend('toHaveSelector', function (string $selector, string $value = null, mixed $attr = null, string $class = null) {
+
+    if (isset($value)) {
+        expect($this->value)->toHaveSelectorWithValue($selector, $value);
+    } elseif(isset($attr)) {
+        if (is_array($attr)) {
+            expect($this->value)->toHaveSelectorWithAttributeContaining($selector, $attr[0], $attr[1]);
+        } else {
+            expect($this->value)->toHaveSelectorWithAttribute($selector, $attr);
+        }
+    } elseif(isset($class)) {
+        expect($this->value)->toHaveSelectorWithClass($selector, $class);
+    } else {
+        expect($this->value)->toHaveSelectorMatch($selector);
+    }
+
+    return $this;
+});
+
+expect()->extend('toHaveSelectorMatch', function (string $selector) {
 
     $selectorContents = selectDOM($this->value, $selector);
 
@@ -35,7 +56,8 @@ expect()->extend('toHaveSelectorWithAttribute', function (string $selector, stri
     $selectorContents = selectDOM($this->value, $selector);
 
     expect($selectorContents)
-        ->count()->toBeGreaterThan(0, __('selectors.none', compact('selector')));
+        ->count()
+        ->toBeGreaterThan(0, "The selector ({$selector}) was not present.");
 
     $attributes = getAttributes($selectorContents, $attribute);
 
@@ -48,8 +70,9 @@ expect()->extend('toHaveSelectorWithAttributeValue', function (string $selector,
 
     $selectorContents = selectDOM($this->value, $selector);
 
-    expect($selectorContents)->count()
-        ->toBeGreaterThan(0, __('selectors.none', compact('selector')));
+    expect($selectorContents)
+        ->count()
+        ->toBeGreaterThan(0, "The selector ({$selector}) was not present.");
 
     $attributes = getAttributes($selectorContents, $attribute)
         ->reject(fn ($attributeValue) => $attributeValue !== $value);
@@ -61,12 +84,21 @@ expect()->extend('toHaveSelectorWithAttributeValue', function (string $selector,
 
 });
 
+expect()->extend('toHaveSelectorWithAttributeContaining', function (string $selector, string $attribute, string $value) {
+
+    $pattern = "/{$value}/";
+    expect($this->value)->toHaveSelectorWithAttributeMatching($selector, $attribute, $pattern);
+
+    return $this;
+});
+
 expect()->extend('toHaveSelectorWithAttributeMatching', function (string $selector, string $attribute, string $pattern) {
 
     $selectorContents = selectDOM($this->value, $selector);
 
-    expect($selectorContents)->count()
-        ->toBeGreaterThan(0, __('selectors.none', compact('selector')));
+    expect($selectorContents)
+        ->count()
+        ->toBeGreaterThan(0, "The selector ({$selector}) was not present.");
 
     $attributes = getAttributes($selectorContents, $attribute)
         ->reject(fn ($attributeValue) => ! preg_match($pattern, $attributeValue));
@@ -77,16 +109,17 @@ expect()->extend('toHaveSelectorWithAttributeMatching', function (string $select
     return $this;
 });
 
-expect()->extend('toHaveSelectorWithClass', function (string $selector, string $class) {
+expect()->extend('toHaveSelectorWithClass', function (string $selector, string $classString) {
 
-    expect($this->value)->toHaveSelectorWithAttributeMatching($selector, 'class', "/{$class}/");
+    Str::of($classString)
+        ->explode(' ')
+        ->each(fn ($class) => expect($this->value)
+            ->toHaveSelectorWithAttributeMatching($selector, 'class', "/{$class}/"));
 
 });
 
-expect()->extend('toHaveSelectorWithClasses', function (string $selector, string $classes) {
+expect()->extend('toHaveButton', function (string $value = null, mixed $attr = null, string $class = null) {
 
-    Str::of($classes)
-        ->explode(' ')
-        ->each(fn ($class) => expect($this->value)->toHaveSelectorWithClass($selector, $class));
+    expect($this->value)->toHaveSelector('button', value: $value, attr: $attr, class: $class);
 
 });
