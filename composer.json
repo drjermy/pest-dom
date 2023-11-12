@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\PestDomSelectors\\": "src"
+            "Drjermy\\PestDom\\": "src"
         },
         "files": [
             "src/Expectations.php",
@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\PestExpectations\\Tests\\": "tests"
+            "Drermy\\PestDom\\Tests\\": "tests"
         }
     },
     "scripts": {
