@@ -14,6 +14,8 @@
     ],
     "require": {
         "php": "^8.1",
+        "pestphp/pest": "^2.5",
+        "pestphp/pest-plugin": "^2.0.1",
         "ext-dom": "*",
         "ext-libxml": "*"
     },
@@ -22,7 +24,6 @@
         "illuminate/support": "^10.31",
         "laravel/pint": "^1.2",
         "orchestra/testbench": "^8.3",
-        "pestphp/pest": "^1.20|^2.0",
         "spatie/ray": "^1.28",
         "symfony/css-selector": "^6.3"
     },
@@ -37,7 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Drermy\\PestDom\\Tests\\": "tests"
+            "Drjermy\\PestDom\\Tests\\": "tests"
         }
     },
     "scripts": {
