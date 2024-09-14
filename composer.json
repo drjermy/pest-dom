@@ -13,15 +13,14 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "pestphp/pest": ">3.0",
-        "ext-dom": "*",
-        "ext-libxml": "*"
+        "php": "^8.3",
     },
     "require-dev": {
         "illuminate/collections": "^10.31",
         "illuminate/support": "^10.31",
         "laravel/pint": "^1.2",
+        "pestphp/pest": ">3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
         "orchestra/testbench": "^8.3",
         "symfony/css-selector": "^6.3"
     },
