@@ -14,8 +14,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "pestphp/pest": ">2.5",
-        "pestphp/pest-plugin": "^2.0.1",
+        "pestphp/pest": ">3.0",
         "ext-dom": "*",
         "ext-libxml": "*"
     },
@@ -24,7 +23,6 @@
         "illuminate/support": "^10.31",
         "laravel/pint": "^1.2",
         "orchestra/testbench": "^8.3",
-        "spatie/ray": "^1.28",
         "symfony/css-selector": "^6.3"
     },
     "autoload": {
